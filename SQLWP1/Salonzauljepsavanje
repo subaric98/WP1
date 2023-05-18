@@ -1,34 +1,73 @@
-use master
+use master;
+drop database if exists salonzauljepsavanje;
 go
---create database salonzauljepsavanje
-use salonzauljepsavanje
+create database salonzauljepsavanje;
+go
+use salonzauljepsavanje;
+
+create table salon(
+	sifra int not null primary key identity(1,1),
+	naziv varchar(50),
+	djelatnica int not null
+);
 
 create table djelatnica(
-	sifra int,
-	ime varchar(50),
-	prezime varchar(50)
-
-);
-create table korisnik(
-	sifra int,
-	ime varchar(50),
+	sifra int not null primary key identity(1,1),
+	ime varchar(50) not null,
 	prezime varchar(50),
-	spol varchar(50),
-	duzinanoktiju int,
+	iban char(21),
+	korisnik int not null
 );
 
-create table termin(
-	sifra int,
-	datum datetime,
-	usluga int,
-	djelatnica int,
+create table korisnik(
+	sifra int not null primary key identity(1,1),
+	ime varchar(50) not null,
+	prezime varchar(50) not null,
+	email varchar(50),
+	usluga int not null
 );
 
 create table usluga(
-	sifra int,
-	cijena decimal(18,2),
-	naziv varchar(50),
-	korisnik int
-
+	sifra int not null primary key identity(1,1),
+	naziv varchar(50) not null,
+	cijena decimal(18,2)
 );
 
+
+
+alter table salon add foreign key (djelatnica) references djelatnica(sifra);
+alter table djelatnica add foreign key (korisnik) references korisnik(sifra);
+alter table korisnik add foreign key (usluga) references usluga(sifra);
+
+
+
+insert into usluga(naziv,cijena)
+values ('NotkiXS',15.99),
+	   ('NoktiS',20.99),
+	   ('NoktiM',23.99),
+	   ('NoktiL',25.99),
+	   ('NoktiXL',30.99);
+
+
+insert into korisnik(ime,prezime,usluga)
+values  ('Ime01','Prezime01',3),
+        ('Ime02','Prezime02',2),
+	('Ime03','Prezime03',4),
+	('Ime04','Prezime04',1),
+	('Ime05','Prezime05',5);
+
+
+insert into djelatnica(ime,korisnik)
+values ('Ime01',4),
+       ('Ime02',3),
+       ('Ime03',5),
+       ('Ime04',1),
+       ('Ime05',2);
+
+
+insert into salon(naziv,djelatnica)
+values ('Salon01',3),
+       ('Salon02',4),
+       ('Salon03',5),
+       ('Salon04',2),
+       ('Salon05',1);
