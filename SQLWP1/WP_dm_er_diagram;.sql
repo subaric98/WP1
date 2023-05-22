@@ -50,5 +50,23 @@ create table svidamise (
 	osoba int,
 );
 
+alter table svidamise add foreign key(objava) references objava(sifra);
+alter table komentar add foreign key(objava) references objava(sifra);
+alter table svidamise_komentar add foreign key(komentar) references komentar(sifra);
+alter table objava add foreign key(osoba) references osoba(sifra);
 
+select * from osoba;
+insert into osoba (ime,prezime,datumrodenja,email,lozinka,brojtel,slika,administrator,stanje,aktivan,uniqueid)
+values ('Antonio','Subaric','2023-04-22 15:49:00','antonio.@mail.hr','123123123',098123123,'varchar',1,1,'varchhar');
+
+
+
+
+select * from komentar;
+insert into komentar(vrijemekomentiranja,opis,objava,osoba)
+values ('2023-05-01 15:49:00','opis01',1,2),
+		('2023-05-02 15:49:00','opis02',2,1),
+		('2023-05-03 15:49:00','opis03',3,3);
+
+--nedovrseno
 
