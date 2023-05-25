@@ -1,0 +1,41 @@
+--use master;
+
+--drop database if exists dostavapaketa_zavrsnirad;
+
+create database dostavapaketa_zavrsnirad;
+go
+use dostavapaketa_zavrsnirad;
+
+create table dostavljac(
+	sifra int not null primary key identity (1,1),
+	korisnik varchar(50) not null,
+	lozinka varchar(50) not null,
+	ime varchar(50) not null,
+	prezime varchar(50) not null,
+	oib int  not null,
+	telefon int not null,
+	iban int not null
+);
+
+create table vozilo (
+	sifra int not null primary key identity (1,1),
+	marka varchar(25),
+	registracijska_oznaka varchar(25),
+	datum_isteka_registracije datetime
+);
+
+create table dostava (
+	sifra int not null primary key identity (1,1),
+	broj_paketa int not null,
+	adresa_dostave varchar(50) not null,
+	datum_dostave datetime not null,
+	status_paketa int not null,
+	dostavljac int not null,
+	vozilo int not null
+);
+
+
+create table status_paketa (
+	sifra int not null primary key identity(1,1),
+	naziv varchar(50)
+);
