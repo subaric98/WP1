@@ -1,0 +1,82 @@
+﻿--use master;
+
+--drop database if exists dostavapaketa_zavrsnirad;
+
+create database dostavapaketa_zavrsnirad;
+go
+use dostavapaketa_zavrsnirad;
+
+create table dostavljac(
+	sifra int not null primary key identity (1,1),
+	korisnik varchar(50) not null,
+	lozinka varchar(50) not null,
+	ime varchar(50) not null,
+	prezime varchar(50) not null,
+	oib int  not null,
+	telefon int not null,
+	iban int not null
+);
+
+create table vozilo (
+	sifra int not null primary key identity (1,1),
+	marka varchar(25),
+	registracijska_oznaka varchar(25),
+	datum_isteka_registracije datetime
+);
+
+create table dostava (
+	sifra int not null primary key identity (1,1),
+	broj_paketa int not null,
+	adresa_dostave varchar(50) not null,
+	datum_dostave datetime not null,
+	status_paketa int not null,
+	dostavljac int not null,
+	vozilo int not null
+);
+
+
+create table status_paketa (
+	sifra int not null primary key identity(1,1),
+	naziv varchar(50)
+);
+
+alter table dostava add foreign key (dostavljac) references dostavljac (sifra);
+alter table dostava add foreign key (vozilo) references vozilo (sifra);
+alter table dostava add foreign key (status_paketa) references status_paketa (sifra);
+
+
+
+
+select * from dostavljac;
+
+insert into dostavljac(korisnik,lozinka,ime,prezime,oib,telefon,iban)
+values ('Dostavljac01',123321,'Antonio','Subaric',1233213211,0977236345,123123123),
+		('Dostavljac02',113321,'Antonio','Cirabus',12324413211,0917236345,123091123);
+		--izbacuje Arithmetic overflow error converting expression to data type int.
+
+
+select * from vozilo;
+
+insert into vozilo(marka,registracijska_oznaka,datum_isteka_registracije)
+values ('Renault_Clio','OS92984HD','2023-09-22 00:00:00'),
+		('Skoca_Octavia','ZG4984HD','2023-01-24 00:00:00'),
+		('Renault_Twingo','OS414HD','2024-04-15 00:00:00');
+
+
+--delete from vozilo where sifra=1;
+
+
+select * from status_paketa;
+
+insert into status_paketa(naziv)
+values ('u_procesu_dostave'),
+		('dostavljen'),
+		('odbijen');
+
+
+select * from dostava;
+
+insert into dostava(broj_paketa,adresa_dostave,datum_dostave,status_paketa,dostavljac,vozilo)
+values		(1,'Sv.LeopoldaMandica','2023-05-30 12:00:00',1,1,2),
+			(2,'Hrvatinica BB Vinkovici','2023-06-01 09:00:00',1,1,2),
+			(3,'Trg Ante Starčevića 10, Osijek','2023-06-03 07:00:00',1,1,2);
