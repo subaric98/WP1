@@ -83,3 +83,21 @@ values		(1,'Sv.LeopoldaMandica','2023-05-30 12:00:00',1,1,2),
 			(2,'Hrvatinica BB Vinkovici','2023-06-01 09:00:00',1,1,2),
 			(3,'Trg Ante Starčevića 10, Osijek','2023-06-03 07:00:00',1,1,2);
 
+--dostavljace sa imenom Antonio
+
+select b.ime
+from dostava a inner join dostavljac b on a.dostavljac=b.sifra
+where b.ime='Antonio';
+
+
+--sve dostave za Osijek
+select top 10 * from dostava;
+
+
+
+--koje automobile voze dostavljaci
+
+select a.dostavljac
+from dostava a inner join vozilo b on a.vozilo=b.sifra;
+
+
