@@ -82,3 +82,10 @@ create table cura (
 	punac int
 
 );
+
+alter table cura add foreign key (svekar) references svekar (sifra);
+alter table mladic add foreign key (muskarac) references muskarac (sifra);
+alter table muskarac add foreign key (zena) references zena (sifra);
+alter table zena add foreign key (sestra) references sestra (sifra);
+alter table sestra_svekar add foreign key (sestra) references sestra (sifra);
+alter table sestra_Svekar add foreign key (svekar) references svekar (sifra);
